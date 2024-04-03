@@ -4,31 +4,43 @@ const toDoList = document.querySelector(".todo-list");
 const completeList = document.querySelector(".complete-list");
 
 const TODOS_KEY = "todos";
+const COMPLETE_KEY = "completeToDos";
 
 let toDos = [];
 let completeToDos = [];
 
 function saveToDos() {
   localStorage.setItem(TODOS_KEY, JSON.stringify(toDos)); //텍스트를 문자열로 변환
+  localStorage.setItem(COMPLETE_KEY, JSON.stringify(completeToDos));
 }
 
 function completeToDo(event) {
-  const li = event.target.parentElement; //target: button, button의 부모: li
-  li.remove();
+  const li = event.target.parentElement; // '완료' 버튼이 속한 li 요소를 찾음
+  li.remove(); // 'todo' 목록에서 해당 항목을 제거
 
   // 'complete' 목록에 새로운 li 요소를 생성하여 추가
   const completeLi = document.createElement("li");
-  completeLi.innerText = li.innerText; // 'todo' 항목의 텍스트를 그대로 복사하여 'complete' 목록에 추가
+  completeLi.id = li.id;
+  completeLi.innerText = li.querySelector("span").innerText; // 'todo' 항목의 텍스트를 그대로 복사하여 'complete' 목록에 추가
+  const button = document.createElement("button");
+  button.innerText = "삭제";
+  button.addEventListener("click", deleteToDo);
+  completeLi.appendChild(button); // 삭제 버튼 추가
   completeList.appendChild(completeLi);
 
-  toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id)); //toDo.id는 int형태이며, li.id는 string형태이므로 맞춰줌
+  // 해당 'todo' 항목을 배열에서 제거
+  const removedToDo = toDos.find((todo) => todo.id === parseInt(li.id));
+  completeToDos.push(removedToDo);
+  toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id));
   saveToDos();
 }
 
 function deleteToDo(event) {
   const li = event.target.parentElement; //target: button, button의 부모: li
   li.remove();
-  toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id)); //toDo.id는 int형태이며, li.id는 string형태이므로 맞춰줌
+  completeToDos = completeToDos.filter(
+    (completeToDos) => completeToDos.id !== parseInt(li.id)
+  );
   saveToDos();
 }
 
