@@ -9,7 +9,7 @@ function App() {
       {movies.results.map((movie) => (
         <Movie
           key={movie.id}
-          coverImg={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+          poster_path={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
           title={movie.title}
           overview={movie.overview}
           vote_average={movie.vote_average}

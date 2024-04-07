@@ -6,7 +6,7 @@ function MovieDetail({ title, overview}) {
   return (
     <div className="detail_wrapper">
       <h2 className="detail_title">{title}</h2>
-      <p className="detail_overview">{overview.length > 330 ? `${overview.slice(0,330)}...` : overview}</p>
+      <p className="detail_overview">{overview}</p>
     </div>
   );
 }
