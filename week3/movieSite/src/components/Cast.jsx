@@ -12,10 +12,10 @@ const CastWrapper = styled.div`
 const Profile = styled.img`
   display: flex;
   height: 70px;
-  //width: 50px;
+  width: 46.66px;
+  object-fit: cover;
   border-radius: 35px;
   margin: 5px;
-  overflow: hidden;
 `;
 
 const Name = styled.span`

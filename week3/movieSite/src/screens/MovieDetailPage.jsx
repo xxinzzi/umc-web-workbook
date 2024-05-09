@@ -75,7 +75,7 @@ const Screen = styled.div`
   padding: 20px;
 `;
 
-const CastInfoWrapper = styled.div`
+const CreditInfoWrapper = styled.div`
     display: grid;
     width: 80%;
     grid-template-columns: repeat(10, 1fr);
@@ -87,6 +87,7 @@ const MovieDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState(null);
   const [casts, setCasts] = useState([]);
+  const [crews, setCrews] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -114,6 +115,7 @@ const MovieDetailPage = () => {
       .then(response => response.json())
       .then(data => {
         setCasts(data.cast);
+        setCrews(data.crew);
         setLoading(false);
       })
       .catch(err => {
@@ -145,7 +147,7 @@ const MovieDetailPage = () => {
           
           <Screen>
             <Text>출연진 및 제작진</Text>
-            <CastInfoWrapper>
+            <CreditInfoWrapper>
             {casts.map((cast) => (
                 <Cast
                 key={cast.id} // 각 영화마다 고유한 key prop 추가
@@ -153,7 +155,17 @@ const MovieDetailPage = () => {
                 profile_path={cast.profile_path}
                 />
             ))}
-            </CastInfoWrapper>
+            </CreditInfoWrapper>
+            
+            <CreditInfoWrapper>
+            {crews.map((crew) => (
+                <Cast
+                key={crew.id} // 각 영화마다 고유한 key prop 추가
+                name={crew.name}
+                profile_path={crew.profile_path}
+                />
+            ))}
+            </CreditInfoWrapper>
         </Screen>
           
         </>
