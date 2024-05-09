@@ -5,17 +5,19 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   display: flex;
+  //height: calc(100% - 20px);
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 10px;
 `;
 
 const MovieWrapper = styled.div`
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(4, 1fr); /* 4개의 열로 나누기 */
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
 `;
 
 const RenderMovies = ( {fetchUrl} ) => {

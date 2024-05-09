@@ -23,8 +23,8 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.span`
-  font-size: 25px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 600;
   color: white;
   margin: 15px;
 `;
@@ -64,10 +64,10 @@ const LogInPage = () => {
     return (
       <Screen>
         <Wrapper>
-          <Header>Log In</Header>
+          <Header>로그인</Header>
           <InputDiv>
             <LogInInputForm
-              label="Email"
+              label="Email or ID"
               type="text"
               value={id}
               onChange={handleIdChange}
@@ -80,7 +80,7 @@ const LogInPage = () => {
             />
           </InputDiv>
           <div>
-            <LoginButton onClick={handleLogin}>Log In</LoginButton>
+            <LoginButton onClick={handleLogin}>로그인</LoginButton>
           </div>
         </Wrapper>
       </Screen>

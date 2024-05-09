@@ -5,7 +5,6 @@ const FooterWrapper = styled.div`
   display: flex;
   height: 40px;
   width: 100%;
-  padding: 3px;
   position: fixed;
   left: 0px;
   bottom: 0px;

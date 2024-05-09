@@ -3,8 +3,7 @@ import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx";
 import styled from "styled-components";
 
-const RootLayout = ({ children }) => {
-    const Wrapper = styled.div`
+const Wrapper = styled.div`
         display: flex;
         flex-direction: column;
         height: 100vh;
@@ -18,28 +17,31 @@ const RootLayout = ({ children }) => {
     const ContentWrapper = styled.div`
         display: flex;
         flex-direction: column;
+        height: calc(100% - 80px);
         width: 100%;
         overflow-y: auto;
         align-items: center;
         position: relative;
-        padding: 40px 0px;
+        top: 40px;
 
         /* 스크롤바 스타일 */
         &::-webkit-scrollbar {
-            width: 10px;
+            width: 8px;
         }
         &::-webkit-scrollbar-thumb {
             background-color: #2f3542;
-            border-radius: 10px;
+            border-radius: 8px;
             background-clip: padding-box;
-            border: 2px solid transparent;
+            border: 1.5px solid transparent;
         }
         &::-webkit-scrollbar-track {
             background-color: grey;
-            border-radius: 10px;
-            box-shadow: inset 0px 0px 5px white;
+            border-radius: 8px;
+            box-shadow: inset 0px 0px 4px white;
         }
     `;
+
+const RootLayout = ({ children }) => {
 
     return (
         <Wrapper>

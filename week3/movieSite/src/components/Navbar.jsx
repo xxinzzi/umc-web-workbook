@@ -6,7 +6,6 @@ const NavbarWrapper = styled.div`
   display: flex;
   height: 40px;
   width: 100%;
-  padding: 3px;
   position: fixed;
   left: 0px;
   top: 0px;

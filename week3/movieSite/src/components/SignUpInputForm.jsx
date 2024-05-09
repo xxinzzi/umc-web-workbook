@@ -1,3 +1,4 @@
+import { faPlaneSlash } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import styled from "styled-components";
 
@@ -23,13 +24,13 @@ const Message = styled.span`
     font-size: 11px;
 `;
 
-const SignUpInputForm = ({ label, type, value, onChange, message, success }) => {
+const SignUpInputForm = ({ label, type, value, placeholder, onChange, message, success }) => {
   return (
     <InputFormWrapper>
       <SignUpInputField
         type={type}
         value={value}
-        placeholder={`${label}을 입력해주세요`}
+        placeholder={placeholder}
         onChange={onChange}
       />
       <MessageDiv>

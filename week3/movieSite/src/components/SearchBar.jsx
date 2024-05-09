@@ -7,6 +7,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 const SearchBarWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 20px;
 `;
 
 const SearchForm = styled.form`
@@ -24,40 +25,46 @@ const SearchIcon = styled.div`
 `;
 
 const SearchInput = styled.input`
-  width: 300px;
+  width: 400px;
   height: 23px;
-  border-radius: 7px;
+  border-radius: 16.5px;
   border: none;
   padding: 5px 10px;
 `;
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, onFocus, onBlur }) => {
   const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onSearch(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery, onSearch]);
+
+  const handleInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   const handleSearchClick = () => {
     onSearch(searchQuery);
   };
 
-  const handleInputChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
-
-  useEffect(() => {
-    onSearch(searchQuery);
-  },[searchQuery]);
-
   return (
     <SearchBarWrapper>
       <SearchForm>
-          <SearchInput
-            type="text"
-            placeholder="검색"
-            value={searchQuery}
-            onChange={handleInputChange}
-          />
-          <SearchIcon onClick={handleSearchClick}>
-            <FontAwesomeIcon icon={faSearch} />
-          </SearchIcon>
+        <SearchInput
+          type="text"
+          placeholder="검색"
+          value={searchQuery}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onChange={handleInputChange}
+        />
+        <SearchIcon onClick={handleSearchClick}>
+          <FontAwesomeIcon icon={faSearch} />
+        </SearchIcon>
       </SearchForm>
     </SearchBarWrapper>
   );

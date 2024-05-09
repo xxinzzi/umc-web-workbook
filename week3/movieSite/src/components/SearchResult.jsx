@@ -16,30 +16,29 @@ const fadeIn = keyframes`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 600px;
-  width: 850px;
+  height: 640px;
+  width: 1200px;
   background-color: rgb(20, 20, 50);
   border-radius: 10px;
   align-items: center;
-  margin: 30px;
   overflow: auto;
   animation: ${fadeIn} 0.3s ease-in-out; /* 애니메이션 효과 적용 */
 
   /* 스크롤바 스타일 */
-  &::-webkit-scrollbar {
-    width: 10px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #2f3542;
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: grey;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
-  }
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: #2f3542;
+            border-radius: 8px;
+            background-clip: padding-box;
+            border: 1.5px solid transparent;
+        }
+        &::-webkit-scrollbar-track {
+            background-color: grey;
+            border-radius: 8px;
+            box-shadow: inset 0px 0px 4px white;
+        }
 `;
 
 const SearchResult = ({ searchQuery }) => {

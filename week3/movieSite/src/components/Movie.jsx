@@ -9,7 +9,6 @@ const Wrapper = styled.div`
   height: 350px;
   width: 180px;
   border-radius: 5px;
-  margin: 5px;
   position: relative;
 
   transition: all 0.3s ease-in-out;
@@ -30,6 +29,8 @@ const MovieInfo = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: absolute;
+  top: 275px;
 `;
 
 const Title = styled.h2`

@@ -25,8 +25,8 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.span`
-  font-size: 25px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 600;
   color: white;
   margin: 15px;
 `;
@@ -69,18 +69,21 @@ const LogInLink = styled.span`
 
 const SignUpPage = () => {
   const [name, setName] = useState("");
+  const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [nameMessage, setNameMessage] = useState("");
+  const [idMessage, setIdMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
   const [ageMessage, setAgeMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [confirmPasswordMessage, setConfirmPasswordMessage] = useState("");
 
   const [nameSuccess, setNameSuccess] = useState(false);
+  const [idSuccess, setIdSuccess] = useState(false);
   const [emailSuccess, setEmailSuccess] = useState(false);
   const [ageSuccess, setAgeSuccess] = useState(false);
   const [passwordSuccess, setPasswordSuccess] = useState(false);
@@ -103,6 +106,18 @@ const SignUpPage = () => {
     } else {
       setNameSuccess(false);
       setNameMessage("필수 입력 항목입니다!");
+    }
+  };
+
+  const handleIdChange = (e) => {
+    const value = e.target.value;
+    setId(value);
+    if (value) {
+      setIdSuccess(true);
+      setIdMessage("");
+    } else {
+      setIdSuccess(false);
+      setIdMessage("필수 입력 항목입니다!");
     }
   };
 
@@ -202,20 +217,31 @@ const SignUpPage = () => {
   return (
     <Screen>
     <Wrapper>
-      <Header>Sign Up</Header>
+      <Header>회원가입</Header>
       <InputDiv>
         <SignUpInputForm
           label="이름"
           type="text"
           value={name}
+          placeholder={"이름을 입력해주세요"}
           onChange={handleNameChange}
           message={nameMessage}
           success={nameSuccess}
         />
         <SignUpInputForm
+          label="아이디"
+          type="text"
+          value={id}
+          placeholder={"아이디를 입력해주세요"}
+          onChange={handleIdChange}
+          message={idMessage}
+          success={idSuccess}
+        />
+        <SignUpInputForm
           label="이메일"
           type="text"
           value={email}
+          placeholder={"이메일을 입력해주세요"}
           onChange={handleEmailChange}
           message={emailMessage}
           success={emailSuccess}
@@ -224,6 +250,7 @@ const SignUpPage = () => {
           label="나이"
           type="text"
           value={age}
+          placeholder={"나이를 입력해주세요"}
           onChange={handleAgeChange}
           message={ageMessage}
           success={ageSuccess}
@@ -232,6 +259,7 @@ const SignUpPage = () => {
           label="비밀번호"
           type="password"
           value={password}
+          placeholder={"비밀번호를 입력해주세요"}
           onChange={handlePasswordChange}
           message={passwordMessage}
           success={passwordSuccess}
@@ -240,13 +268,14 @@ const SignUpPage = () => {
           label="비밀번호확인"
           type="password"
           value={confirmPassword}
+          placeholder={"비밀번호 확인"}
           onChange={handleConfirmPasswordChange}
           message={confirmPasswordMessage}
           success={confirmPasswordSuccess}
         />
       </InputDiv>
       <div>
-        <SubmitButton valid={valid} onClick={handleSubmit}>Sign Up</SubmitButton>
+        <SubmitButton valid={valid} onClick={handleSubmit}>회원가입</SubmitButton>
       </div>
       <LogInLinkDiv>
         <IdExistAsk>이미 아이디가 있으신가요?</IdExistAsk>
