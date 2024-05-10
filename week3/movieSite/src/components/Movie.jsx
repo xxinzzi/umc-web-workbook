@@ -27,6 +27,7 @@ const Image = styled.img`
 
 const MovieInfo = styled.div`
   display: flex;
+  width: 180px;
   justify-content: space-between;
   align-items: center;
   position: absolute;
@@ -41,9 +42,12 @@ const Title = styled.h2`
 `;
 
 const VoteAverage = styled.span`
-  margin: 5px 10px 5px 0px;
+  margin: 5px 0px;
   font-size: 13px;
   color: white;
+  position: absolute;
+  top: 0px;
+  right: 10px;
 `;
 
 const Movie = ({ id, poster_path, title, overview, vote_average }) => {
