@@ -20,7 +20,7 @@ const MessageDiv = styled.div`
 `;
 
 const Message = styled.span`
-    color: ${props => (props.success ? "green" : "red")};
+    color: ${props => (props.$success ? "green" : "red")};
     font-size: 11px;
 `;
 
@@ -34,7 +34,7 @@ const SignUpInputForm = ({ label, type, value, placeholder, onChange, message, s
         onChange={onChange}
       />
       <MessageDiv>
-        <Message success={success}>{message}</Message>
+        <Message $success={success}>{message}</Message>
       </MessageDiv>
     </InputFormWrapper>
   );

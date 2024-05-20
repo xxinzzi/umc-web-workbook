@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
-import LogInInputForm from "../components/LogInInputForm";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import LogInInputForm from "../components/LogInInputForm";
+//import { useMutation } from "react-query";
+import axios from "axios";
 
 const Screen = styled.div`
   display: flex;
@@ -45,46 +48,86 @@ const LoginButton = styled.button`
 `;
 
 const LogInPage = () => {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isValid, setIsValid] = useState(false);
+  const navigate = useNavigate();
 
-    const [id, setId] = useState("");
-    const [password, setPassword] = useState("");
+  const handleIdChange = (e) => {
+    setId(e.target.value);
+  };
 
-    const handleIdChange = (e) => {
-        setId(e.target.value);
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+  /*
+  const postLogin = async ({ formData }) => {
+    try {
+      const response = await axios.post("http://localhost:8080/auth/login", formData);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
     }
+  };
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    }
+  const postLoginQuery = useMutation(postLogin, {
+    onSuccess: (data) => {
+      window.localStorage.setItem("token", JSON.stringify(data.token));
+      navigate("/");
+    },
+    onError: (error) => {
+      setErrorMessage(error.message);
+    },
+  });
+*/
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const formData = {
+      username: id,
+      password: password,
+    };
 
-    const handleLogin = () => {
+    axios.post('http://localhost:8080/auth/login', formData)
+        .then(response => {
+          alert('가입되었습니다!');
+          navigate('/login');
+          console.log(response);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          
+        });
 
-    }
+    navigate('/signup');
+  };
   
-    return (
-      <Screen>
-        <Wrapper>
-          <Header>로그인</Header>
-          <InputDiv>
-            <LogInInputForm
-              label="Email or ID"
-              type="text"
-              value={id}
-              onChange={handleIdChange}
-            />
-            <LogInInputForm
-              label="Password"
-              type="password"
-              value={password}
-              onChange={handlePasswordChange}
-            />
-          </InputDiv>
-          <div>
-            <LoginButton onClick={handleLogin}>로그인</LoginButton>
-          </div>
-        </Wrapper>
-      </Screen>
-    );
+
+  return (
+    <Screen>
+      <Wrapper>
+        <Header>로그인</Header>
+        <InputDiv>
+          <LogInInputForm
+            label="ID"
+            type="text"
+            value={id}
+            onChange={handleIdChange}
+          />
+          <LogInInputForm
+            label="Password"
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+        </InputDiv>
+        <div>
+          <LoginButton onClick={handleLogin}>로그인</LoginButton>
+        </div>
+      </Wrapper>
+    </Screen>
+  );
 };
 
 export default LogInPage;

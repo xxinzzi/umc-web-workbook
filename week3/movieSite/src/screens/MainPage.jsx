@@ -26,7 +26,7 @@ const fadeOut = keyframes`
 `;
 
 const Banner = styled.div`
-  display: ${props => props.showBanner ? "flex" : "none"};
+  display: ${props => props.$showBanner ? "flex" : "none"};
   height: 230px;
   width: 100%;
   color: white;
@@ -38,7 +38,7 @@ const Banner = styled.div`
 `;
 
 const Text = styled.span`
-  display: ${props => props.showText ? "flex" : "none"};
+  display: ${props => props.$showText ? "flex" : "none"};
   width: 100%;
   color: white;
   font-size: 20px;
@@ -53,9 +53,9 @@ const SearchContainer = styled.div`
   align-items: center;
   flex-direction: column;
   animation: ${props =>
-    props.searchUp
+    props.$searchUp
       ? css`${fadeIn} 0.3s ease-in-out`
-      : props.searchDown
+      : props.$searchDown
       ? css`${fadeOut} 0.3s ease-in-out`
       : "none"};
 `;
@@ -83,9 +83,9 @@ const MainPage = () => {
 
   return (
     <div>
-      <Banner showBanner={show}>환영합니다</Banner>
-      <Text showText={show}>Find your movies !</Text>
-      <SearchContainer searchUp={!show} searchDown={searchDown}>
+      <Banner $showBanner={show}>환영합니다</Banner>
+      <Text $showText={show}>Find your movies !</Text>
+      <SearchContainer $searchUp={!show} $searchDown={searchDown}>
         <SearchBar onSearch={handleSearch} onFocus={handleFocus} onBlur={handleBlur}/>
         {searchQuery && (<SearchResult searchQuery={searchQuery}/> )}
       </SearchContainer>

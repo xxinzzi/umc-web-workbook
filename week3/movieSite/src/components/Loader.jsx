@@ -10,6 +10,7 @@ const LoaderWrapper = styled.div`
 `;
 
 const LoaderIcon = styled.div`
+  heigth: 50px;
   width: 50px;
   aspect-ratio: 2;
   --_g: no-repeat radial-gradient(circle closest-side,#000 90%,#0000);

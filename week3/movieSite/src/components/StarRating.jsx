@@ -7,7 +7,7 @@ const StarRatingWrapper = styled.div`
 
 const Star = styled.span`
   font-size: 1em;
-  color: ${props => (props.filled ? "yellow" : "gray")};
+  color: ${props => (props.$filled ? "yellow" : "gray")};
 `;
 
 const StarRating = ({ value }) => {
@@ -17,7 +17,7 @@ const StarRating = ({ value }) => {
     stars.push(
       <Star
         key={i}
-        filled={i < value}
+        $filled={i < value}
       >
         &#9733;
       </Star>

@@ -24,7 +24,7 @@ function App() {
           }
         />
         <Route
-          path="/signUp"
+          path="/signup"
           element={
             <RootLayout>
               <SignUpPage />
@@ -32,7 +32,7 @@ function App() {
           }
         />
         <Route
-          path="/logIn"
+          path="/login"
           element={
             <RootLayout>
               <LogInPage />

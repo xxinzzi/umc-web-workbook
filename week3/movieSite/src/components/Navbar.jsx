@@ -68,11 +68,11 @@ const Navbar = () => {
       </LeftColumn>
       <RightColumn>
         {!isLoggedIn ? ( // 로그인 상태에 따라 다른 버튼 렌더링
-          <Tab path="/logIn" label="로그인" />
+          <Tab path="/login" label="로그인" />
         ) : (
           <TabText>로그아웃</TabText>
         )}
-        <Tab path="/signUp" label="회원가입" />
+        <Tab path="/signup" label="회원가입" />
         <Tab path="/popular" label="Popular" />
         <Tab path="/nowPlaying" label="Now Playing" />
         <Tab path="/topRated" label="Top Rated" />

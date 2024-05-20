@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import SignUpInputForm from "../components/SignUpInputForm";
-import Modal from "../components/Modal";
 import styled from "styled-components";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Screen = styled.div`
   display: flex;
@@ -40,8 +40,8 @@ const InputDiv = styled.div`
 const SubmitButton = styled.button`
   height: 27px;
   width: 270px;
-  background-color: ${props => (props.valid ? "rgb(200, 180, 20)" : "grey")};
-  color: ${props => (props.valid ? "black" : "white")};
+  background-color: ${(props) => (props.$valid ? "rgb(200, 180, 20)" : "grey")};
+  color: ${(props) => (props.$valid ? "black" : "white")};
   border-radius: 7px;
   margin: 20px;
   border: none;
@@ -64,7 +64,7 @@ const LogInLink = styled.span`
   color: white;
   font-size: 11px;
   font-weight: 700;
-  cursor: pointer; 
+  cursor: pointer;
 `;
 
 const SignUpPage = () => {
@@ -89,11 +89,6 @@ const SignUpPage = () => {
   const [passwordSuccess, setPasswordSuccess] = useState(false);
   const [confirmPasswordSuccess, setConfirmPasswordSuccess] = useState(false);
   const [valid, setValid] = useState(false);
-
-  const [showModal, setShowModal] = useState(false);
-
-  const openModal = () => setShowModal(true);
-  const closeModal = () => setShowModal(false);
 
   const navigate = useNavigate();
 
@@ -136,7 +131,12 @@ const SignUpPage = () => {
   const handleAgeChange = (e) => {
     const value = e.target.value;
     setAge(value);
-    if (value && !isNaN(parseInt(value)) && parseInt(value) >= 0 && parseInt(value) >= 19) {
+    if (
+      value &&
+      !isNaN(parseInt(value)) &&
+      parseInt(value) >= 0 &&
+      parseInt(value) >= 19
+    ) {
       setAgeSuccess(true);
       setAgeMessage("");
     } else {
@@ -156,8 +156,14 @@ const SignUpPage = () => {
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
-    if (value && value.length >= 4 && value.length <= 12 &&
-      /(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{4,12}$/.test(value)) {
+    if (
+      value &&
+      value.length >= 4 &&
+      value.length <= 12 &&
+      /(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{4,12}$/.test(
+        value
+      )
+    ) {
       setPasswordSuccess(true);
       setPasswordMessage("");
     } else {
@@ -169,7 +175,9 @@ const SignUpPage = () => {
       } else if (value.length > 12) {
         setPasswordMessage("비밀번호는 12자리까지 가능합니다.");
       } else {
-        setPasswordMessage("비밀번호는 영어, 숫자, 특수문자를 조합하여야 합니다.");
+        setPasswordMessage(
+          "비밀번호는 영어, 숫자, 특수문자를 조합하여야 합니다."
+        );
       }
     }
   };
@@ -190,35 +198,57 @@ const SignUpPage = () => {
     setValid(nameSuccess && emailSuccess && ageSuccess && passwordSuccess && confirmPasswordSuccess);
   }, [nameSuccess, emailSuccess, ageSuccess, passwordSuccess, confirmPasswordSuccess]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (valid) {
 
-      const userData = {
-        username: name,
-        email: email,
-        age: age,
-        password: password,
-        confirmPassword: confirmPassword
-      };
-
-      localStorage.setItem('userData', JSON.stringify(userData));
-      console.log(userData);
-
-      openModal();
+    if (!valid) {
+      return; // 유효성 검사 실패 시 formData 전송하지 않음
     }
-  };
 
-  const handleModalClose = () => {
-    closeModal();
-    navigate("/logIn"); // 모달이 닫힐 때 로그인 페이지로 이동
+    const formData = {
+      name: name,
+      email: email,
+      age: age,
+      password: password,
+      username: id,
+      passwordCheck: confirmPassword,
+    };
+
+    console.log(formData);
+
+    axios.post('http://localhost:8080/auth/signup', formData)
+        .then(response => {
+          alert('가입되었습니다!');
+          navigate('/login');
+          console.log(response);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          if (error.response) {
+            // 요청이 만들어졌고 서버가 응답을 했지만 상태 코드는 2xx 범위 밖에 있습니다.
+            if (error.response.status === 409) {
+              alert('이미 존재하는 아이디입니다.');
+            } else if (error.response.status === 400) {
+              alert('비밀번호가 일치하지 않습니다.');
+            } else {
+              alert('회원가입에 실패했습니다.');
+            }
+          } else if (error.request) {
+            console.error('Request data:', error.request);
+            alert('서버와의 연결에 실패했습니다.');
+          } else {
+            console.error('Error message:', error.message);
+            alert('회원가입 중 오류가 발생했습니다.');
+          }
+        });
+      
   };
 
   return (
     <Screen>
-    <Wrapper>
-      <Header>회원가입</Header>
-      <InputDiv>
+      <Wrapper>
+        <Header>회원가입</Header>
+        <InputDiv>
         <SignUpInputForm
           label="이름"
           type="text"
@@ -274,15 +304,18 @@ const SignUpPage = () => {
           success={confirmPasswordSuccess}
         />
       </InputDiv>
-      <div>
-        <SubmitButton valid={valid} onClick={handleSubmit}>회원가입</SubmitButton>
-      </div>
-      <LogInLinkDiv>
-        <IdExistAsk>이미 아이디가 있으신가요?</IdExistAsk>
-        <LogInLink onClick={() => navigate("/logIn")}>로그인 페이지로 이동하기</LogInLink>
-      </LogInLinkDiv>
+        <div>
+          <SubmitButton $valid={valid} onClick={handleSubmit}>
+            회원가입
+          </SubmitButton>
+        </div>
+        <LogInLinkDiv>
+          <IdExistAsk>이미 아이디가 있으신가요?</IdExistAsk>
+          <LogInLink onClick={() => navigate("/logIn")}>
+            로그인 페이지로 이동하기
+          </LogInLink>
+        </LogInLinkDiv>
       </Wrapper>
-      {showModal && <Modal closeModal={handleModalClose} />}
     </Screen>
   );
 };
