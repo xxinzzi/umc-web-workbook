@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { keyframes, css } from "styled-components";
 import SearchBar from "../components/SearchBar";
 import SearchResult from "../components/SearchResult";
+import axios from "axios";
 
 const fadeIn = keyframes`
   from {
@@ -64,6 +65,10 @@ const MainPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [show, setShow] = useState(true);
   const [searchDown, setSearchDown] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState("");
+  const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(false); // 로딩 상태 추가
 
   const handleSearch = (query) => {
     setSearchQuery(query);
@@ -81,9 +86,47 @@ const MainPage = () => {
     }
   }
 
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      
+      try {
+      
+        const token = localStorage.getItem('token');
+        //console.log(token);
+
+        const response = await axios.get('http://localhost:8080/auth/me',  {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        console.log('Response:', response.data);
+        setUsername(response.data.username);
+        setLoading(false); // 로딩 끝
+
+      } catch (error) {
+        console.error('Error:', error);
+        setLoading(false); // 로딩 끝
+      }
+    };
+
+    if (localStorage.getItem('token') != null){
+      setIsLoggedIn(true);
+      fetchData();
+    } else setIsLoggedIn(false);
+
+  }, [localStorage.getItem('token')]);
+
   return (
     <div>
-      <Banner $showBanner={show}>환영합니다</Banner>
+      {isLoggedIn ? (
+        <Banner $showBanner={show}>
+          {loading ? "로딩 중…" : `${username}님 환영합니다`}
+        </Banner>
+      ) : (
+        <Banner $showBanner={show}>환영합니다</Banner>
+      )}
       <Text $showText={show}>Find your movies !</Text>
       <SearchContainer $searchUp={!show} $searchDown={searchDown}>
         <SearchBar onSearch={handleSearch} onFocus={handleFocus} onBlur={handleBlur}/>

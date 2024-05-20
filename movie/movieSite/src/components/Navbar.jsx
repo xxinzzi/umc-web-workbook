@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -39,26 +39,46 @@ const TabText = styled.span`
   }
 `;
 
-const Navbar = () => {
+const Tab = ({ path, label }) => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태를 저장하는 state
+  const selected = window.location.pathname === path;
 
-  const handleTabClick = (path) => {
+  const handleClick = () => {
     navigate(path);
   };
 
-  const Tab = ({ path, label }) => {
-    const selected = window.location.pathname === path; // 선택된 탭이 현재 경로와 일치하는지 확인
+  return (
+    <TabText onClick={handleClick} selected={selected}>
+      {label}
+    </TabText>
+  );
+};
 
-    const handleClick = () => {
-      handleTabClick(path);
-    };
+const LogoutTab = ({ label, onLogout }) => {
+  const handleClick = () => {
+    onLogout();
+  };
 
-    return (
-      <TabText onClick={handleClick} selected={selected}>
-        {label}
-      </TabText>
-    );
+  return (
+    <TabText onClick={handleClick}>
+      {label}
+    </TabText>
+  );
+};
+
+const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const storedToken = window.localStorage.getItem("token");
+    if (storedToken) {
+      setIsLoggedIn(true);
+    }
+  }, [window.localStorage.getItem("token")]);
+
+  const handleLogout = () => {
+    window.localStorage.removeItem("token");
+    setIsLoggedIn(false);
   };
 
   return (
@@ -67,12 +87,14 @@ const Navbar = () => {
         <Tab path="/" label="XZ Movie" />
       </LeftColumn>
       <RightColumn>
-        {!isLoggedIn ? ( // 로그인 상태에 따라 다른 버튼 렌더링
-          <Tab path="/login" label="로그인" />
+        {!isLoggedIn ? (
+          <>
+            <Tab path="/login" label="로그인" />
+            <Tab path="/signup" label="회원가입" />
+          </>
         ) : (
-          <TabText>로그아웃</TabText>
+          <LogoutTab label="로그아웃" onLogout={handleLogout} />
         )}
-        <Tab path="/signup" label="회원가입" />
         <Tab path="/popular" label="Popular" />
         <Tab path="/nowPlaying" label="Now Playing" />
         <Tab path="/topRated" label="Top Rated" />
