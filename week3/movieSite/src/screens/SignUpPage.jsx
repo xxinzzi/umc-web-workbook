@@ -22,17 +22,6 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  
-  @media (max-width: 768px) {
-    width: 350px;
-    height: 550px;
-  }
-
-  @media (max-width: 480px) {
-    width: 300px;
-    height: 500px;
-  }
-  
 `;
 
 const Header = styled.span`
@@ -40,21 +29,12 @@ const Header = styled.span`
   font-weight: 600;
   color: white;
   margin: 15px;
-
-  @media (max-width: 768px) {
-    font-size: 18px;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 16px;
-  }
 `;
 
 const InputDiv = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 100%;
 `;
 
 const SubmitButton = styled.button`
@@ -65,60 +45,26 @@ const SubmitButton = styled.button`
   border-radius: 7px;
   margin: 20px;
   border: none;
-
-  @media (max-width: 768px) {
-    height: 25px;
-    width: 70%;
-    font-size: 13px;
-  }
-
-  @media (max-width: 480px) {
-    height: 23px;
-    width: 70%;
-    font-size: 12px;
-  }
 `;
 
 const LogInLinkDiv = styled.div`
   display: flex;
-  width: 60%;
+  width: 240px;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   margin: 10px;
 `;
 
 const IdExistAsk = styled.span`
   color: white;
   font-size: 11px;
-  margin: 10px;
-
-  @media (max-width: 768px) {
-    font-size: 9px;
-    margin: 0 9px 0 0;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 8px;
-    margin: 0 8px 0 0;
-  }
 `;
 
 const LogInLink = styled.span`
   color: white;
   font-size: 11px;
   font-weight: 700;
-  margin: 10px;
   cursor: pointer;
-
-  @media (max-width: 768px) {
-    font-size: 9px;
-    margin: 0 0 9px 0;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 8px;
-    margin: 0 0 8px 0;
-  }
 `;
 
 const SignUpPage = () => {
@@ -295,7 +241,6 @@ const SignUpPage = () => {
             alert('회원가입 중 오류가 발생했습니다.');
           }
         });
-      
   };
 
   return (
@@ -358,9 +303,11 @@ const SignUpPage = () => {
           success={confirmPasswordSuccess}
         />
       </InputDiv>
-        <SubmitButton $valid={valid} onClick={handleSubmit}>
-          회원가입
-        </SubmitButton>
+        <div>
+          <SubmitButton $valid={valid} onClick={handleSubmit}>
+            회원가입
+          </SubmitButton>
+        </div>
         <LogInLinkDiv>
           <IdExistAsk>이미 아이디가 있으신가요?</IdExistAsk>
           <LogInLink onClick={() => navigate("/logIn")}>
