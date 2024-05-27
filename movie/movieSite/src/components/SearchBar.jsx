@@ -24,6 +24,7 @@ const SearchIcon = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  color: white;
 `;
 
 const SearchInput = styled.input`

@@ -2,6 +2,7 @@ import React from "react";
 import Movie from "./Movie";
 import Loader from "./Loader";
 import styled from "styled-components";
+//import shortId from 'shortid';
 
 const Wrapper = styled.div`
   display: flex;
@@ -44,7 +45,7 @@ const RenderMovies = ({ movies, loading, loaderRef }) => {
       <MovieWrapper>
         {movies.map((movie) => (
           <Movie
-            key={movie.id}
+            //key={shortId.generate()}
             id={movie.id}
             poster_path={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
             title={movie.title}
