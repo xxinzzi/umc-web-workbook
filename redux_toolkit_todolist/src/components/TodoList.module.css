@@ -1,0 +1,54 @@
+/* TodoList.module.css */
+ul {
+    display: flex;
+    width: 400px;
+    padding: 0px;
+    margin: 10px 0px;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .list {
+    display: flex;
+    width: 350px;
+    height: 30px;
+    align-items: center;
+    margin: 5px;
+  }
+  
+  .check {
+    display: none;
+  }
+  
+  /* off */
+  .check + label {
+    background-color: none;
+  }
+  
+  /* on */
+  .check:checked + label {
+    background-color: skyblue;
+  }
+  
+  label {
+    display: block;
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    border: 1px solid skyblue;
+  }
+  
+  .todolist {
+    width: 280px;
+    padding: 15px;
+    font-size: 15px;
+    color: rgb(90, 90, 90);
+  }
+  
+  .deleteBtn {
+    height: 28px;
+    width: 28px;
+    border: none;
+    background: none;
+  }
+  

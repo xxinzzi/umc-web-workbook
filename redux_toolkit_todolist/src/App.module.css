@@ -1,0 +1,23 @@
+span{
+    display: flex;
+    height: 30px;
+    padding: 20px;
+    font-size: 30px;
+    color: rgb(90, 90, 90);
+    border-bottom: solid 1px lightgray;
+    margin-bottom: 10px;
+}
+.App{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background-color: lightgray;
+    align-items: center;
+    justify-content: center;
+}
+.Wrapper{
+    height: 600px;
+    width: 400px;
+    border-radius: 20px;
+    background-color: white;
+}
