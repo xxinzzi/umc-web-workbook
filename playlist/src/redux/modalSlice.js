@@ -1,15 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import cartItems from "../constants/cartItems";
+
+const initialState = {
+  isOpen: false,
+};
 
 export const modalSlice = createSlice({
   name: "modal",
+  initialState,
   reducers: {
-    clearCart(state) {
-      state.items = [];
-      state.totalPrice = 0;
+    openModal(state) {
+      state.isOpen = true;
+    },
+    closeModal(state) {
+      state.isOpen = false;
     },
   },
 });
 
-export const { clearCart } = modalSlice.actions;
-export default cartSlice.reducer;
+export const { openModal, closeModal } = modalSlice.actions;
+export default modalSlice.reducer;

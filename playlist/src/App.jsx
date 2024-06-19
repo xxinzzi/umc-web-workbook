@@ -3,7 +3,9 @@ import CartItem from "./components/CartItem";
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart, calculateTotals } from "./redux/cartSlice";
 import Header from "./components/Header";
+import Modal from "./components/Modal";
 import styled from "styled-components";
+import { openModal } from "./redux/modalSlice";
 
 const Main = styled.div`
   display: flex;
@@ -54,7 +56,7 @@ const ClearCartBtn = styled.button`
   width: 110px;
   font-size: 12px;
   color: red;
-  background-color: rgb(240, 190, 190);
+  background-color: white;
   border: solid 1px red;
   border-radius: 5px;
 `;
@@ -87,11 +89,12 @@ function App() {
             <Span>총 가격</Span>
             <TotalPrice>{"₩ " + totalPrice}</TotalPrice>
           </PriceWrapper>
-          <ClearCartBtn onClick={() => dispatch(clearCart())}>
+          <ClearCartBtn onClick={() => dispatch(openModal())}>
             장바구니 초기화
           </ClearCartBtn>
         </Wrapper>
       </Main>
+      <Modal />
     </div>
   );
 }
