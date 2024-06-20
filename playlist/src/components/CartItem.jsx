@@ -63,7 +63,6 @@ const Amount = styled.span`
 
 export default function CartItem({ id, img, title, singer, price, amount }) {
   const dispatch = useDispatch();
-  console.log(singer);
 
   const handleIncrease = () => {
     dispatch(increase(id));

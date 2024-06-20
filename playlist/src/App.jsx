@@ -1,11 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
 import CartItem from "./components/CartItem";
 import { useSelector, useDispatch } from "react-redux";
-import { clearCart, calculateTotals } from "./redux/cartSlice";
 import Header from "./components/Header";
 import Modal from "./components/Modal";
+import Loader from "./components/Loader";
 import styled from "styled-components";
 import { openModal } from "./redux/modalSlice";
+import { fetchCartItems } from "./redux/cartSlice";
 
 const Main = styled.div`
   display: flex;
@@ -64,35 +65,44 @@ const ClearCartBtn = styled.button`
 function App() {
   const items = useSelector((state) => state.cart.items);
   const totalPrice = useSelector((state) => state.cart.totalPrice);
+  const isLoading = useSelector((state) => state.cart.isLoading);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCartItems());
+  }, [dispatch]);
 
   return (
     <div>
       <Header />
       <Main>
-        <Wrapper>
-          <Title>당신이 선택한 음반</Title>
-          <CartItemsWrapper>
-            {items.map((item) => (
-              <CartItem
-                key={item.id}
-                id={item.id}
-                title={item.title}
-                singer={item.singer}
-                price={item.price}
-                amount={item.amount}
-                img={item.img}
-              />
-            ))}
-          </CartItemsWrapper>
-          <PriceWrapper>
-            <Span>총 가격</Span>
-            <TotalPrice>{"₩ " + totalPrice}</TotalPrice>
-          </PriceWrapper>
-          <ClearCartBtn onClick={() => dispatch(openModal())}>
-            장바구니 초기화
-          </ClearCartBtn>
-        </Wrapper>
+        {isLoading ? ( 
+        <Loader/> 
+        ) : (
+          <Wrapper>
+            <Title>당신이 선택한 음반</Title>
+            <CartItemsWrapper>
+              {items.map((item) => (
+                <CartItem
+                  key={item.id}
+                  id={item.id}
+                  title={item.title}
+                  singer={item.singer}
+                  price={item.price}
+                  amount={item.amount}
+                  img={item.img}
+                />
+              ))}
+            </CartItemsWrapper>
+            <PriceWrapper>
+              <Span>총 가격</Span>
+              <TotalPrice>{"₩ " + totalPrice}</TotalPrice>
+            </PriceWrapper>
+            <ClearCartBtn onClick={() => dispatch(openModal())}>
+              장바구니 초기화
+            </ClearCartBtn>
+          </Wrapper>
+        )}
       </Main>
       <Modal />
     </div>

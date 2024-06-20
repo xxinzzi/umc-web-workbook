@@ -1,13 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
-import cartItems from "../constants/cartItems";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+
+export const fetchCartItems = createAsyncThunk(
+  "cartSlice/fetchCartItems",
+  async () => {
+    const response = await axios.get("http://localhost:8080/musics");
+    return response.data;
+  }
+);
 
 const initialState = {
-  items: cartItems,
-  totalAmount: cartItems.reduce((total, item) => total + item.amount, 0),
-  totalPrice: cartItems.reduce(
-    (total, item) => total + item.price * item.amount,
-    0
-  ),
+  items: [],
+  totalAmount: 0,
+  totalPrice: 0,
+  isLoading: false,
 };
 
 export const cartSlice = createSlice({
@@ -56,6 +62,26 @@ export const cartSlice = createSlice({
       state.totalAmount = totalAmount;
       state.totalPrice = totalPrice;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCartItems.pending, (state) => {
+        state.isLoading = "true";
+      })
+      .addCase(fetchCartItems.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.items = action.payload; // Update the items array with the fetched data
+        // Calculate totals after fetching the items
+        state.totalAmount = 0;
+        state.totalPrice = 0;
+        state.items.forEach((item) => {
+          state.totalAmount += item.amount;
+          state.totalPrice += item.price * item.amount;
+        });
+      })
+      .addCase(fetchCartItems.rejected, (state) => {
+        state.isLoading = "false";
+      });
   },
 });
 
