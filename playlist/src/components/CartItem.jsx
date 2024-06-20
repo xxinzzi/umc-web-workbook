@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import {
   increase,
   decrease,
-  removeItem,
   calculateTotals,
 } from "../redux/cartSlice";
 import { ChevronDown, ChevronUp } from "../constants/icons";
