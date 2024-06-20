@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 const InputFormWrapper = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     margin: 8px;
 `;

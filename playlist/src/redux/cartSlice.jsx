@@ -3,9 +3,13 @@ import axios from "axios";
 
 export const fetchCartItems = createAsyncThunk(
   "cartSlice/fetchCartItems",
-  async () => {
-    const response = await axios.get("http://localhost:8080/musics");
-    return response.data;
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get("http://localhost:8080/musics");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response ? error.response.data : "Network Error");
+    }
   }
 );
 
@@ -66,7 +70,7 @@ export const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchCartItems.pending, (state) => {
-        state.isLoading = "true";
+        state.isLoading = true;
       })
       .addCase(fetchCartItems.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -79,8 +83,10 @@ export const cartSlice = createSlice({
           state.totalPrice += item.price * item.amount;
         });
       })
-      .addCase(fetchCartItems.rejected, (state) => {
-        state.isLoading = "false";
+      .addCase(fetchCartItems.rejected, (state, action) => {
+        state.isLoading = false;
+        alert(action.payload.message);
+        console.log(action.payload);
       });
   },
 });

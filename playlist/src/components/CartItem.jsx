@@ -27,12 +27,12 @@ const DetailWrapper = styled.div`
 `;
 const Detail = styled.span`
   display: flex;
-  font-size: 12px;
+  font-size: 13px;
   color: black;
 `;
 const Price = styled.span`
   display: flex;
-  font-size: 12px;
+  font-size: 13px;
   color: gray;
   margin-top: 5px;
 `;
@@ -57,7 +57,7 @@ const AmountBtn = styled.button`
 `;
 const Amount = styled.span`
   display: flex;
-  font-size: 12px;
+  font-size: 13px;
   color: black;
 `;
 
@@ -79,7 +79,7 @@ export default function CartItem({ id, img, title, singer, price, amount }) {
       <Poster src={img} alt={title}></Poster>
       <DetailWrapper>
         <Detail>{`${title} | ${singer}`}</Detail>
-        <Price>{price}</Price>
+        <Price>{"₩ " + price}</Price>
       </DetailWrapper>
       <AmountWrapper>
         <AmountBtn onClick={handleIncrease}>

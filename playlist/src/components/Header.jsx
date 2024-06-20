@@ -15,7 +15,7 @@ const TopBar = styled.div`
 `;
 const TopBarDiv = styled.div`
   display: flex;
-  width: 50%;
+  width: 700px;
   color: white;
   flex-direction: row;
   align-items: center;
